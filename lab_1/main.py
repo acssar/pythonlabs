@@ -1,23 +1,22 @@
 import argparse
 
-space = ' '
 
-
-def current_row(m):
+def current_row(m, prev):
     row = []
     for i in range(m):
         if i == 0 or i == m - 1:
             row.append(1)
         else:
-            c_row = current_row(m - 1)
-            row.append(c_row[i - 1] + c_row[i])
+            row.append(prev[i - 1] + prev[i])
     return row
 
 
 def pascal_triangle(n):
     result = []
+    row = []
     for i in range(n):
-        result.append(current_row(i + 1))
+        row = current_row(i+1, row)
+        result.append(row)
 
     number_width = len(str(max(result[-1]))) + 1
 
@@ -31,7 +30,7 @@ def pascal_triangle(n):
 
 parser = argparse.ArgumentParser(description="Pascal triangle")
 
-parser.add_argument('-n', dest="N", default=3, type=int)
+parser.add_argument('-n', dest="N", default=5, type=int)  # TODO: help
 
 args = parser.parse_args()
 
